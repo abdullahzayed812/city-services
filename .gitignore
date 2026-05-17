@@ -1,0 +1,81 @@
+# ─── Dependencies ────────────────────────────────────────────────────────────
+node_modules/
+.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# ─── Environment variables ───────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+# keep the example file committed
+!.env.example
+
+# ─── Build output ────────────────────────────────────────────────────────────
+dist/
+build/
+out/
+.next/
+.nuxt/
+*.tsbuildinfo
+
+# ─── Vite ────────────────────────────────────────────────────────────────────
+.vite/
+
+# ─── Backend uploads (user-generated files) ──────────────────────────────────
+backend/uploads/avatars/*
+backend/uploads/documents/*
+backend/uploads/images/*
+backend/uploads/voices/*
+!backend/uploads/avatars/.gitkeep
+!backend/uploads/documents/.gitkeep
+!backend/uploads/images/.gitkeep
+!backend/uploads/voices/.gitkeep
+
+# ─── React Native / Android ──────────────────────────────────────────────────
+# Gradle
+.gradle/
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/key.properties
+android/app/release/
+
+# React Native generated
+*.jks
+*.keystore
+!debug.keystore
+
+# Metro bundler
+.metro-health-check*
+
+# Expo (if ever used)
+.expo/
+web-build/
+
+# ─── Logs ────────────────────────────────────────────────────────────────────
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ─── Testing ─────────────────────────────────────────────────────────────────
+coverage/
+.nyc_output/
+
+# ─── IDE / Editor ────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ─── OS ──────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
