@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import {
-  View, Text, TextInput, TouchableOpacity,
-  StyleSheet, KeyboardAvoidingView, Platform, Alert,
-} from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, Alert } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useServerStore } from "@store/server.store";
+import { RootStackParamList } from "@/navigation";
 
-type Props = { navigation: NativeStackNavigationProp<any> };
+type Props = { navigation: NativeStackNavigationProp<RootStackParamList> };
 
 export default function ServerSetupScreen({ navigation }: Props) {
   const [ip, setIp] = useState("192.168.0.128");
@@ -35,10 +33,7 @@ export default function ServerSetupScreen({ navigation }: Props) {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.root}
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-    >
+    <KeyboardAvoidingView style={styles.root} behavior={Platform.OS === "ios" ? "padding" : undefined}>
       <View style={styles.container}>
         <Text style={styles.logo}>🏙️</Text>
         <Text style={styles.title}>إعداد الخادم</Text>
@@ -58,23 +53,14 @@ export default function ServerSetupScreen({ navigation }: Props) {
           />
 
           <Text style={styles.label}>رقم المنفذ (Port)</Text>
-          <TextInput
-            style={styles.input}
-            value={port}
-            onChangeText={setPort}
-            placeholder="5000"
-            keyboardType="number-pad"
-            textAlign="right"
-          />
+          <TextInput style={styles.input} value={port} onChangeText={setPort} placeholder="5000" keyboardType="number-pad" textAlign="right" />
 
           <TouchableOpacity style={styles.btn} onPress={handleSave} activeOpacity={0.85}>
             <Text style={styles.btnText}>حفظ والمتابعة</Text>
           </TouchableOpacity>
         </View>
 
-        <Text style={styles.hint}>
-          يتم حفظ هذا الإعداد محلياً ولن يُطلب منك مجدداً
-        </Text>
+        <Text style={styles.hint}>يتم حفظ هذا الإعداد محلياً ولن يُطلب منك مجدداً</Text>
       </View>
     </KeyboardAvoidingView>
   );
@@ -87,19 +73,33 @@ const styles = StyleSheet.create({
   title: { fontSize: 24, fontFamily: "Cairo-Bold", color: "#0f172a", textAlign: "center", marginBottom: 6 },
   subtitle: { fontSize: 14, fontFamily: "Cairo-Regular", color: "#64748b", textAlign: "center", marginBottom: 32 },
   card: {
-    backgroundColor: "#fff", borderRadius: 20, padding: 24,
-    elevation: 3, shadowColor: "#000", shadowOpacity: 0.07, shadowRadius: 10,
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    padding: 24,
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOpacity: 0.07,
+    shadowRadius: 10,
   },
   label: { fontSize: 13, fontFamily: "Cairo-SemiBold", color: "#334155", textAlign: "right", marginBottom: 6 },
   input: {
-    borderWidth: 1, borderColor: "#e2e8f0", borderRadius: 12,
-    paddingHorizontal: 16, paddingVertical: 12, fontSize: 15,
-    fontFamily: "Cairo-Regular", marginBottom: 18, backgroundColor: "#f8fafc",
+    borderWidth: 1,
+    borderColor: "#e2e8f0",
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    fontSize: 15,
+    fontFamily: "Cairo-Regular",
+    marginBottom: 18,
+    backgroundColor: "#f8fafc",
     textAlign: "right",
   },
   btn: {
-    backgroundColor: "#2563eb", borderRadius: 14,
-    paddingVertical: 14, alignItems: "center", marginTop: 4,
+    backgroundColor: "#2563eb",
+    borderRadius: 14,
+    paddingVertical: 14,
+    alignItems: "center",
+    marginTop: 4,
   },
   btnText: { color: "#fff", fontSize: 16, fontFamily: "Cairo-Bold" },
   hint: { fontSize: 12, color: "#94a3b8", textAlign: "center", marginTop: 20, fontFamily: "Cairo-Regular" },

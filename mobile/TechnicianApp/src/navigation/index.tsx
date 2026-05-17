@@ -1,7 +1,8 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createNativeStackNavigator, NativeStackScreenProps} from '@react-navigation/native-stack';
+import {createBottomTabNavigator, BottomTabScreenProps} from '@react-navigation/bottom-tabs';
+import {CompositeScreenProps} from '@react-navigation/native';
 import {Text} from 'react-native';
 import {useAuthStore} from '@store/auth.store';
 import {useServerStore} from '@store/server.store';
@@ -24,8 +25,55 @@ import DocumentsScreen from '@features/profile/screens/DocumentsScreen';
 import ServicesManagementScreen from '@features/profile/screens/ServicesManagementScreen';
 import PortfolioScreen from '@features/profile/screens/PortfolioScreen';
 
-const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
+// ─── Route param lists ────────────────────────────────────────────────────────
+
+export type SetupStackParamList = {
+  ServerSetup: undefined;
+};
+
+export type AuthStackParamList = {
+  Login: undefined;
+  Register: undefined;
+  OTP: {phone: string; purpose: string};
+  ForgotPassword: undefined;
+};
+
+export type AppStackParamList = {
+  Main: undefined;
+  RequestDetail: {requestId: number};
+  Chat: {requestId: number; customerName?: string};
+  Withdraw: undefined;
+  EditProfile: undefined;
+  Documents: undefined;
+  ServicesManagement: undefined;
+  Portfolio: undefined;
+};
+
+export type TabParamList = {
+  الرئيسية: undefined;
+  الطلبات: undefined;
+  وظائفي: undefined;
+  المحفظة: undefined;
+  حسابي: undefined;
+};
+
+// ─── Per-screen props helpers (import these in screen files) ─────────────────
+
+export type AppScreenProps<T extends keyof AppStackParamList> =
+  NativeStackScreenProps<AppStackParamList, T>;
+
+export type AuthScreenProps<T extends keyof AuthStackParamList> =
+  NativeStackScreenProps<AuthStackParamList, T>;
+
+export type TabScreenProps<T extends keyof TabParamList> = CompositeScreenProps<
+  BottomTabScreenProps<TabParamList, T>,
+  NativeStackScreenProps<AppStackParamList>
+>;
+
+// ─── Navigators ───────────────────────────────────────────────────────────────
+
+const Stack = createNativeStackNavigator<AppStackParamList>();
+const Tab = createBottomTabNavigator<TabParamList>();
 
 function TabIcon({label, focused}: {label: string; focused: boolean}) {
   const icons: Record<string, string> = {
@@ -69,7 +117,7 @@ function AppStack() {
     <Stack.Navigator screenOptions={{headerBackTitle: 'رجوع'}}>
       <Stack.Screen name="Main" component={MainTabs} options={{headerShown: false}} />
       <Stack.Screen name="RequestDetail" component={RequestDetailScreen} options={{title: 'تفاصيل الطلب'}} />
-      <Stack.Screen name="Chat" component={ChatScreen} options={({route: r}) => ({title: (r.params as any)?.customerName ?? 'المحادثة'})} />
+      <Stack.Screen name="Chat" component={ChatScreen} options={({route}) => ({title: route.params.customerName ?? 'المحادثة'})} />
       <Stack.Screen name="Withdraw" component={WithdrawScreen} options={{title: 'سحب الرصيد'}} />
       <Stack.Screen name="EditProfile" component={EditProfileScreen} options={{title: 'تعديل الملف'}} />
       <Stack.Screen name="Documents" component={DocumentsScreen} options={{title: 'المستندات'}} />
@@ -79,7 +127,7 @@ function AppStack() {
   );
 }
 
-const SetupStack = createNativeStackNavigator();
+const SetupStack = createNativeStackNavigator<SetupStackParamList>();
 
 export default function Navigation() {
   const {isAuthenticated} = useAuthStore();
