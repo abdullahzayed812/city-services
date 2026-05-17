@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!--
+        Allows HTTP (cleartext) traffic to all domains.
+        Used for development with a local HTTP backend.
+        For production, replace base-config with domain-config scoped to your backend domain,
+        and set cleartextTrafficPermitted="false" on the base-config.
+    -->
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>
