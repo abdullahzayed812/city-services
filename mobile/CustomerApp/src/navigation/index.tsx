@@ -55,6 +55,7 @@ export type RootStackParamList = {
   Transactions: undefined;
   EditProfile: undefined;
   SavedAddresses: undefined;
+  ServerSetup: undefined;
 };
 
 export type TabParamList = {
